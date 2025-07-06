@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Price Prediction Analytics</title>
+  <link rel="stylesheet" href="/css/admin_theme.css">
+  <link rel="stylesheet" href="/css/ridex_dark_theme.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="admin-body">
+  <%- include('../partials/adminHeader') %>
+
+  <main class="analytics-panel">
+    <div class="analytics-header">
+      <h1 class="analytics-title">Price Prediction Analytics</h1>
+      <form method="GET" action="/admin/price-analytics" class="analytics-filter">
+        <label>From:
+          <input type="date" name="start_date" value="<%= query.start_date || '' %>">
+        </label>
+        <label>To:
+          <input type="date" name="end_date" value="<%= query.end_date || '' %>">
+        </label>
+        <button type="submit" class="btn">Apply</button>
+      </form>
+    </div>
+
+    <!-- 1. Price Distribution -->
+    <section class="analytics-section">
+      <h2 class="analytics-section-title">Predicted Price Distribution</h2>
+      <canvas id="distChart" width="400" height="300" data-dist='<%- JSON.stringify(distRows) %>'></canvas>
+    </section>
+
+    <!-- 2. Average Price per Make -->
+    <section class="analytics-section">
+      <h2 class="analytics-section-title">Average Predicted Price per Make</h2>
+      <canvas id="makeChart" width="600" height="300" data-make='<%- JSON.stringify(makeRows) %>'></canvas>
+    </section>
+
+    <!-- 3. Predicted Price Trend Over Time -->
+    <section class="analytics-section">
+      <h2 class="analytics-section-title">Average Predicted Price Over Time</h2>
+      <canvas id="trendChart" width="600" height="300" data-time='<%- JSON.stringify(timeRows) %>'></canvas>
+    </section>
+  </main>
+
+  <script>
+    // 1. Price Range Distribution
+    (() => {
+      const ctx = document.getElementById('distChart').getContext('2d');
+      const data = JSON.parse(ctx.canvas.dataset.dist);
+      new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: data.map(row => row.range_label),
+          datasets: [{
+            data: data.map(row => row.count),
+            backgroundColor: ['#FFD700', '#FFA500', '#FF6347']
+          }]
+        },
+        options: {
+          plugins: { legend: { labels: { color: 'white' } } }
+        }
+      });
+    })();
+
+    // 2. Make-wise Average Price
+    (() => {
+      const ctx = document.getElementById('makeChart').getContext('2d');
+      const data = JSON.parse(ctx.canvas.dataset.make);
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: data.map(row => row.make),
+          datasets: [{
+            label: 'Avg Price ($)',
+            data: data.map(row => row.avg_price),
+            backgroundColor: 'rgba(255,215,0,0.7)',
+            borderColor: 'white',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: { beginAtZero: true, ticks: { color: 'white' }, grid: { color: '#444' } },
+            x: { ticks: { color: 'white' }, grid: { color: '#444' } }
+          },
+          plugins: { legend: { labels: { color: 'white' } } }
+        }
+      });
+    })();
+
+    // 3. Price Trend Over Time
+    (() => {
+      const ctx = document.getElementById('trendChart').getContext('2d');
+      const data = JSON.parse(ctx.canvas.dataset.time);
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: data.map(row => row.date),
+          datasets: [{
+            label: 'Avg Price ($)',
+            data: data.map(row => row.avg_price),
+            borderColor: '#FFD700',
+            backgroundColor: 'rgba(255,215,0,0.2)',
+            tension: 0.3,
+            fill: true
+          }]
+        },
+        options: {
+          scales: {
+            y: { beginAtZero: false, ticks: { color: 'white' }, grid: { color: '#444' } },
+            x: { ticks: { color: 'white' }, grid: { color: '#444' } }
+          },
+          plugins: { legend: { labels: { color: 'white' } } }
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

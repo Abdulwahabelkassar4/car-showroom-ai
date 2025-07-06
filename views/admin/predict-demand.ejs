@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Predict Car Demand</title>
+  <link rel="stylesheet" href="/css/ridex_dark_theme.css">
+  <link rel="stylesheet" href="/css/admin_theme.css">
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&family=Open+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+  <%- include('../partials/adminHeader') %>
+
+  <div class="container prediction-container">
+    <h1 class="prediction-title">
+      <i class="ri-line-chart-line"></i> Predict Car Demand
+    </h1>
+
+    <form id="predictDemandForm" class="prediction-form" action="/admin/predict-demand" method="POST">
+      <div class="form-group">
+        <label>
+          <input type="checkbox" id="isExistingCar" name="isExistingCar"> Predict for existing car in database
+        </label>
+      </div>
+
+      <div class="form-group" id="carIdGroup">
+        <label for="carIdSelect">Choose Existing Car:</label>
+        <select id="carIdSelect">
+          <option value="">-- Select a Car --</option>
+        </select>
+        <label for="carId">Selected Car ID:</label>
+        <input type="number" name="carId" id="carId" placeholder="Enter Car ID" readonly>
+      </div>
+
+      <div class="form-group">
+        <label for="Gender">Gender:</label>
+        <input type="text" name="Gender" placeholder="Gender" required>
+      </div>
+
+      <div class="form-group">
+        <label for="Annual_Income">Annual Income:</label>
+        <input type="number" name="Annual_Income" placeholder="Annual Income" required>
+      </div>
+
+      <div class="form-group">
+        <label for="Company">Company:</label>
+        <input type="text" name="Company" id="Company" placeholder="Company" required>
+      </div>
+
+      <div class="form-group">
+        <label for="Model">Model:</label>
+        <input type="text" name="Model" id="Model" placeholder="Model" required>
+      </div>
+
+      <div class="form-group">
+        <label for="Engine">Engine:</label>
+        <input type="text" name="Engine" placeholder="Engine" required>
+      </div>
+
+      <div class="form-group">
+        <label for="Transmission">Transmission:</label>
+        <input type="text" name="Transmission" id="Transmission" placeholder="Transmission" required>
+      </div>
+
+      <div class="form-group">
+        <label for="Color">Color:</label>
+        <input type="text" name="Color" id="Color" placeholder="Color" required>
+      </div>
+
+      <div class="form-group">
+        <label for="Price">Price:</label>
+        <input type="number" name="Price" id="Price" placeholder="Price" required>
+      </div>
+
+      <div class="form-group">
+        <label for="Body_Style">Body Style:</label>
+        <input type="text" name="Body_Style" id="Body_Style" placeholder="Body Style" required>
+      </div>
+
+      <div class="form-group">
+        <label for="Dealer_Region">Dealer Region:</label>
+        <input type="text" name="Dealer_Region" placeholder="Dealer Region" required>
+      </div>
+
+      <div class="button-group">
+        <button type="submit" class="predict-btn">
+          <i class="ri-calculator-line"></i> Predict Demand
+        </button>
+      </div>
+    </form>
+
+    <% if (typeof predictedDemand !== 'undefined') { %>
+      <div class="success-message">
+        <i class="ri-line-chart-line"></i>
+        Predicted Demand: <%= predictedDemand %>
+      </div>
+    <% } %>
+  </div>
+
+  <script>
+    const carIdGroup = document.getElementById('carIdGroup');
+    const carSelect = document.getElementById('carIdSelect');
+    const isExistingCarCheckbox = document.getElementById('isExistingCar');
+
+    isExistingCarCheckbox.addEventListener('change', () => {
+      carIdGroup.style.display = isExistingCarCheckbox.checked ? 'block' : 'none';
+    });
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const res = await fetch('/api/cars');
+        const cars = await res.json();
+
+        cars.forEach(car => {
+          const option = document.createElement('option');
+          option.value = car.id;
+          option.textContent = `${car.id} - ${car.make} ${car.model} (${car.year})`;
+          carSelect.appendChild(option);
+        });
+
+        carSelect.addEventListener('change', async () => {
+          if (!isExistingCarCheckbox.checked) return;
+
+          const carId = carSelect.value;
+          if (!carId) return;
+
+          const res = await fetch(`/api/cars/${carId}`);
+          const car = await res.json();
+
+          document.getElementById('Company').value = car.make;
+          document.getElementById('Model').value = car.model;
+          document.getElementById('Transmission').value = car.transmission;
+          document.getElementById('Color').value = car.color;
+          document.getElementById('Price').value = car.price;
+          document.getElementById('Body_Style').value = car.body_style;
+          document.getElementById('carId').value = carId;
+        });
+      } catch (err) {
+        console.error("Failed to load cars:", err);
+      }
+    });
+  </script>
+</body>
+</html>

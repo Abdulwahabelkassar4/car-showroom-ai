@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Drive Bookings - Admin</title>
+  <link rel="stylesheet" href="/css/ridex_dark_theme.css">
+  <link rel="stylesheet" href="/css/admin_theme.css">
+  <style>
+    .table-container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #1b1b1b;
+      border: 1px solid gold;
+      border-radius: 10px;
+      color: white;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 12px 10px;
+      border-bottom: 1px solid #444;
+      text-align: left;
+    }
+    th {
+      background: #111;
+      color: gold;
+    }
+    .status {
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    .pending { color: orange; }
+    .approved { color: greenyellow; }
+    .completed { color: lightblue; }
+    .cancelled { color: red; }
+  </style>
+</head>
+<body class="admin-body">
+  <%- include('../partials/adminHeader') %>
+
+  <div class="table-container">
+    <h2 style="color: gold;">Test Drive Bookings</h2>
+
+    <% if (bookings.length > 0) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Car</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Message</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% bookings.forEach(b => { %>
+            <tr>
+              <td><%= b.user_name %></td>
+              <td><%= b.make %> <%= b.model %> (<%= b.year %>)</td>
+              <td><%= b.booking_date.toISOString().split('T')[0] %></td>
+              <td><%= b.booking_time %></td>
+              <td>
+                <form method="POST" action="/admin/test-drives/<%= b.id %>/status" style="display: flex; gap: 6px; align-items: center;">
+                  <select name="status" onchange="this.form.submit()" style="padding: 5px; background: #000; color: white; border: 1px solid gold; border-radius: 4px;">
+                    <option value="Pending" <%= b.status === 'Pending' ? 'selected' : '' %>>Pending</option>
+                    <option value="Approved" <%= b.status === 'Approved' ? 'selected' : '' %>>Approved</option>
+                    <option value="Completed" <%= b.status === 'Completed' ? 'selected' : '' %>>Completed</option>
+                    <option value="Cancelled" <%= b.status === 'Cancelled' ? 'selected' : '' %>>Cancelled</option>
+                  </select>
+                </form>
+              </td>
+                            <td><%= b.message || '—' %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } else { %>
+      <p style="color: #aaa;">No bookings found.</p>
+    <% } %>
+  </div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users - Car Showroom</title>
+    <link rel="stylesheet" href="/css/ridex_dark_theme.css">
+    <link rel="stylesheet" href="/css/admin_theme.css">
+</head>
+<body class="admin-body">
+    <%- include('../partials/adminHeader') %>
+
+    <main class="admin-main">
+        <div class="admin-container">
+            <h1 class="admin-title">Manage Users</h1>
+            
+            <div class="table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% users.forEach(user => { %>
+                            <tr>
+                                <td><%= user.id %></td>
+                                <td><%= user.name %></td>
+                                <td><%= user.email %></td>
+                                <td><%= user.role %></td>
+                                <td>
+                                    <button class="action-btn edit-btn" onclick="editUser(<%= user.id %>)">Edit</button>
+                                    <button class="action-btn delete-btn" onclick="deleteUser(<%= user.id %>)">Delete</button>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+
+    <script>
+       function editUser(userId) {
+        window.location.href = `/admin/edit-user/${userId}`;
+        }
+
+        function deleteUser(userId) {
+            if (confirm('Are you sure you want to delete this user?')) {
+                fetch(`/admin/users/${userId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert('Failed to delete user');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while deleting the user');
+                });
+            }
+        }
+    </script>
+</body>
+</html> 

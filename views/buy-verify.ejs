@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Verify Purchase</title>
+  <link rel="stylesheet" href="/css/ridex_dark_theme.css">
+</head>
+<body>
+  <%- include('partials/navbar') %>
+
+<div class="verify-wrapper">
+    <h2 style="color: gold; text-align: center;">Verify Your Purchase</h2>
+    <p style="text-align: center;">Enter the 6-digit code sent to your email.</p>
+
+    <% if (error) { %>
+      <p style="color: red; text-align: center;"><%= error %></p>
+    <% } %>
+
+    <form action="/buy/<%= carId %>/verify" method="POST" style="margin-top: 30px;">
+      <label for="otp" style="display:block; color: #ccc; margin-bottom: 8px;">OTP Code:</label>
+      <input
+        type="text"
+        id="otp"
+        name="otp"
+        required
+        pattern="\d{6}"
+        maxlength="6"
+        placeholder="123456"
+        style="width: 100%; padding: 12px; border: 1px solid gold; background: black; color: white; border-radius: 5px;"
+      />
+      <button type="submit" class="btn" style="margin-top: 20px; background: gold; color: black; font-weight: bold; width: 100%;">
+        Verify & Complete Purchase
+      </button>
+    </form>
+
+    <p style="text-align:center; margin-top: 20px;">
+      Didn’t receive it? <a href="/buy/<%= carId %>/resend-otp" style="color: gold;">Resend Code</a>
+    </p>
+  </div>
+</body>
+</html>

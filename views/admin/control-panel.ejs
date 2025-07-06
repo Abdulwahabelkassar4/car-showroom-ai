@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Control Panel</title>
+  <link rel="stylesheet" href="/css/ridex_dark_theme.css">
+  <link rel="stylesheet" href="/css/admin_theme.css" />
+</head>
+<body class="admin-body">
+  <%- include('../partials/adminHeader') %>
+
+  <main class="control-panel">
+    <h1 class="control-title">Control Panel</h1>
+    <div class="control-grid">
+
+      <div class="control-card">
+        <h2 class="control-card-title">Manage Cars</h2>
+        <p class="control-card-desc">View, edit, and delete all listed vehicles in the system.</p>
+        <a href="/admin/manage-cars" class="control-card-link">Go to Manage Cars</a>
+      </div>
+
+      <div class="control-card">
+        <h2 class="control-card-title">Add Car</h2>
+        <p class="control-card-desc">Create a new car listing with all features, image, and predictions.</p>
+        <a href="/admin/add-car" class="control-card-link">Go to Add Car</a>
+      </div>
+
+      <div class="control-card">
+        <h2 class="control-card-title">Sales</h2>
+        <p class="control-card-desc">Review all sold cars, filter them by type, and analyze demand.</p>
+        <a href="/admin/sales" class="control-card-link">Go to Sales</a>
+      </div>
+
+      <div class="control-card">
+        <h2 class="control-card-title">Test Drives</h2>
+        <p class="control-card-desc">View test drive requests and manage status like approved or completed.</p>
+        <a href="/admin/test-drives" class="control-card-link">Go to Test Drives</a>
+      </div>
+
+      <div class="control-card">
+        <h2 class="control-card-title">Price Prediction</h2>
+        <p class="control-card-desc">Use AI to generate car price estimates based on entered features.</p>
+        <a href="/admin/predict-price" class="control-card-link">Go to Price Prediction</a>
+      </div>
+
+      <div class="control-card">
+        <h2 class="control-card-title">Demand Prediction</h2>
+        <p class="control-card-desc">Use AI to classify car demand level as High, Medium, or Low.</p>
+        <a href="/admin/predict-demand" class="control-card-link">Go to Demand Prediction</a>
+      </div>
+
+      <div class="control-card">
+        <h2 class="control-card-title">Manage Users</h2>
+        <p class="control-card-desc">View all registered users, update their roles, or remove accounts.</p>
+        <a href="/admin/manage-users" class="control-card-link">Go to Manage Users</a>
+      </div>
+      <div class="control-card">
+        <h2 class="control-card-title">Analytics</h2>
+        <p class="control-card-desc">View sales insights, average price per make, and monthly trends.</p>
+        <a href="/admin/analytics" class="control-card-link">Go to Analytics</a>
+      </div>
+      <div class="control-card">
+        <h2 class="control-card-title">Demand Prediction analytics</h2>
+        <p class="control-card-desc">Showcased demand using historical data to optimize inventory and supply planning.</p>
+        <a href="/admin/demand-analytics" class="control-card-link">Go to Demand Prediction</a>
+      </div>
+
+      <div class="control-card">
+        <h2 class="control-card-title">Price Prediction analytics</h2>
+        <p class="control-card-desc">Predicted optimal prices based on market trends and past data to boost revenue and competitiveness.</p>
+        <a href="/admin/price-analytics" class="control-card-link">Go to Demand Prediction</a>
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>

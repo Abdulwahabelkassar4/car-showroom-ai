@@ -1,0 +1,62 @@
+    .booking-container {
+      display: flex;
+      max-width: 1000px;
+      margin: 50px auto;
+      gap: 40px;
+      color: white;
+    }
+
+    .car-preview img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .booking-form {
+      flex: 1;
+      background-color: #111;
+      padding: 25px;
+      border-radius: 10px;
+      border: 1px solid gold;
+    }
+
+    .booking-form h2 {
+      color: gold;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      color: #ccc;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      background: black;
+      color: white;
+      border: 1px solid gold;
+      border-radius: 5px;
+    }
+
+    button {
+      background: gold;
+      color: black;
+      padding: 12px 20px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    button:hover {
+      background: #e0b030;
+    }

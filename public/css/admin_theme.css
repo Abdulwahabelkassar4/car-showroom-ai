@@ -1,0 +1,698 @@
+/* Admin Theme CSS */
+:root {
+  --gold: #FFD700;
+  --dark-bg: #1b1b1b;
+  --sidebar-bg: #111;
+  --card-bg: #222;
+  --table-bg: #2b2b2b;
+}
+
+/* Base styles */
+body {
+  background-color: var(--dark-bg);
+  color: #fff;
+  font-family: 'Ubuntu', sans-serif;
+  margin-top: 50px;
+}
+
+/* Admin Header styles */
+.admin-header {
+  background: #000;
+  border-bottom: 2px solid var(--gold);
+}
+
+.admin-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-left: 0;
+}
+
+.admin-logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.admin-logo img {
+  height: 40px;
+}
+
+.admin-logo span {
+  color: var(--gold);
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.admin-menu {
+  display: flex;
+  gap: 2rem;
+}
+
+.admin-nav-link {
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.admin-nav-link:hover {
+  background: var(--gold);
+  color: #000;
+}
+
+/* ──────────────── CONTROL PANEL STYLES ──────────────── */
+
+.control-panel {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.control-title {
+  font-size: 2rem;
+  color: gold;
+  text-align: center;
+  margin-bottom: 40px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.control-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.control-card {
+  background-color: #111;
+  border: 1px solid gold;
+  border-radius: 10px;
+  padding: 25px;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.control-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.control-card-title {
+  font-size: 1.3rem;
+  color: gold;
+  margin-bottom: 10px;
+}
+
+.control-card-desc {
+  color: #ccc;
+  font-size: 0.95rem;
+  flex-grow: 1;
+  margin-bottom: 15px;
+}
+
+.control-card-link {
+  display: inline-block;
+  background: gold;
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px 15px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.control-card-link:hover {
+  background: #e6c200;
+  color: black;
+}
+
+#VisitH {
+  color: red;
+  font-weight: bold; 
+  text-shadow: 0 0 3px var(--gold); 
+  font-size: 18px;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+#VisitH:hover {
+  background: var(--gold);
+  color: #000;
+}
+.admin-user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.admin-username {
+  color: var(--gold);
+  font-weight: bold;
+}
+
+.admin-logout {
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  background: #333;
+  transition: all 0.3s ease;
+}
+
+.admin-logout:hover {
+  background: #ff4444;
+}
+
+/* Sidebar styles */
+.sidebar {
+  width: 230px;
+  background: var(--sidebar-bg);
+  min-height: 100vh;
+  padding: 1rem;
+  animation: slideIn 0.5s ease;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.sidebar h2 {
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+.sidebar a {
+  color: #eee;
+  display: block;
+  margin: 10px 0;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.sidebar a:hover {
+  color: var(--gold);
+  background: rgba(255, 215, 0, 0.1);
+}
+
+/* Content area */
+.content {
+  flex: 1;
+  padding: 2rem;
+  margin-left: 230px;
+}
+
+/* Dashboard container */
+.dashboard-container {
+  display: flex;
+}
+
+/* KPI Cards */
+.kpi-cards {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.kpi-card {
+  background: var(--card-bg);
+  padding: 15px;
+  border-radius: 10px;
+  flex: 1;
+  min-width: 200px;
+  text-align: center;
+  border: 1px solid #333;
+  transition: transform 0.3s ease;
+}
+
+.kpi-card:hover {
+  transform: scale(1.02);
+  border-color: var(--gold);
+}
+
+.kpi-card h3 {
+  color: var(--gold);
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.kpi-value {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--table-bg);
+  margin-top: 4rem;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th,td {
+  padding: 12px;
+  border: 1px solid #444;
+  text-align: left;
+}
+
+th {
+  background: #333;
+  color: var(--gold);
+}
+
+td button {
+  padding: 12px;
+  border: 1px solid #444;
+  display: inline-block;
+}
+
+tr:hover {
+  background: rgba(255, 215, 0, 0.05);
+}
+
+/* Form styles */
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  color: var(--gold);
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  background: #000;
+  border: 1px solid #333;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.form-group textarea {
+  min-height: 100px;
+}
+
+button {
+  background: var(--gold);
+  color: #000;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: #ffd700;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    position: relative;
+    min-height: auto;
+  }
+  
+  .content {
+    margin-left: 0;
+  }
+  
+  .kpi-cards {
+    flex-direction: column;
+  }
+}
+
+/* Admin Footer styles */
+.admin-footer {
+  background: #000;
+  padding: 1rem;
+  border-top: 2px solid var(--gold);
+  margin-top: 2rem;
+}
+
+.admin-footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  color: #fff;
+}
+
+.admin-footer-content p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Prediction Pages Styles */
+
+/* ===== Unified Prediction Pages Styling ===== */
+.prediction-title {
+  margin-top: 100px;
+  text-align: center;
+}
+#predictPricePage, #predictDemandPage {
+  background-color: var(--dark-bg);
+  color: var(--gold);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 800px;
+  margin: 50px auto;
+}
+
+#predictPriceForm, #predictDemandForm {
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid var(--gold);
+  margin-top: 50px;
+}
+
+#predictPriceForm label, #predictDemandForm label {
+  color: var(--gold);
+  margin-bottom: 5px;
+  font-weight: bold;
+  display: block;
+}
+
+#predictPriceForm input, #predictDemandForm input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid var(--gold);
+  border-radius: 5px;
+  background-color: #000;
+  color: #fff;
+}
+
+#predictPriceForm button, #predictDemandForm button,
+#confirmBtn {
+  background-color: var(--gold);
+  color: #000;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#predictPriceForm button:hover, #predictDemandForm button:hover,
+#confirmBtn:hover {
+  background-color: #e0b030;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+}
+
+.success-message, .error-message {
+  background-color: #2a2a2a;
+  border: 1px solid var(--gold);
+  padding: 15px;
+  border-radius: 5px;
+  color: var(--gold);
+  font-weight: bold;
+}
+
+button-group {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* ──────────── ANALYTICS PAGE ──────────── */
+
+.analytics-panel {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  color: white;
+}
+
+.analytics-title {
+  text-align: center;
+  color: gold;
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+.analytics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.analytics-filter {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.analytics-filter input[type="date"] {
+  background: #000;
+  border: 1px solid gold;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+.analytics-filter .btn {
+  background: gold;
+  color: black;
+  padding: 8px 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.analytics-section {
+  margin-bottom: 40px;
+}
+
+.analytics-section-title {
+  font-size: 1.4rem;
+  color: gold;
+  margin-bottom: 10px;
+}
+
+.analytics-list {
+  list-style: none;
+  padding-left: 0;
+  color: #ccc;
+  font-size: 1rem;
+}
+
+.analytics-list li {
+  margin-bottom: 5px;
+}
+
+#distChart {
+  max-width: 800px;
+  max-height: 800px;
+  margin: auto;
+  display: block;
+}
+
+/* ──────────────── ADMIN HEADER RESPONSIVE FOR PHONES ──────────────── */
+/* ──────────────── ADMIN HEADER MOBILE FIX (≤ 767px) ──────────────── */
+/* ────────── PHONES ONLY ────────── */
+@media (max-width: 767px) {
+  .admin-nav {
+    padding: 10px;
+  }
+
+  .admin-hamburger {
+    display: block;
+    font-size: 1.8rem;
+    color: white;
+    background: gold;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 5px;
+  }
+
+  .admin-menu-wrapper {
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+    padding-top: 15px;
+  }
+
+  .admin-menu-wrapper.active {
+    display: flex;
+  }
+
+  .admin-menu,
+  .admin-user {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .admin-nav-link,
+  .admin-logout,
+  #VisitH {
+    color: white;
+    font-size: 0.95rem;
+    text-align: left;
+    padding: 6px 0;
+  }
+
+  #VisitH {
+    color: gold;
+    font-weight: bold;
+    text-shadow: 0 0 2px gold;
+  }
+}
+
+/* ────────── DESKTOP RESTORE ────────── */
+@media (min-width: 768px) {
+  .admin-menu-wrapper {
+    display: flex !important;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .admin-menu,
+  .admin-user {
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .admin-hamburger {
+    display: none;
+  }
+}
+
+/* ─────────── DASHBOARD PAGE: MOBILE + TABLET RESPONSIVE ─────────── */
+@media (max-width: 1024px) {
+  .admin-dashboard .kpi-card {
+    flex: 1 1 45%;
+    margin: 10px;
+  }
+
+  .admin-dashboard .kpi-row {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 767px) {
+  .admin-dashboard .kpi-card {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
+  .admin-dashboard .kpi-row {
+    gap: 15px;
+  }
+}
+
+/* ─────────── CONTROL PANEL PAGE: MOBILE + TABLET RESPONSIVE ─────────── */
+/* ─────────── CONTROL PANEL RESPONSIVENESS ─────────── */
+@media (max-width: 1024px) {
+  .control-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 60px;
+      padding: 30px 10px;
+  }
+}
+
+@media (max-width: 767px) {
+  .control-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 15px;
+  }
+
+  .control-card {
+    width: 100%;
+  }
+
+  .control-card-title {
+    font-size: 1.1rem;
+  }
+
+  .control-card-desc {
+    font-size: 0.95rem;
+  }
+
+  .control-card-link {
+    font-size: 0.95rem;
+    padding: 10px 14px;
+  }
+}
+
+
+/* ─────────── ADD CAR FORM RESPONSIVENESS ─────────── */
+/* ─────────── BETTER MOBILE FORM FOR ADD CAR PAGE ─────────── */
+/* ─────────── FINAL FIX FOR ADD CAR PAGE ON PHONES ─────────── */
+@media (max-width: 767px) {
+  .admin-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 20px !important;
+    margin: 0 auto !important;
+  }
+
+  .admin-form {
+    padding: 0 10px;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group label {
+    font-size: 1rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 1rem;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .admin-button {
+    font-size: 1rem;
+    padding: 12px;
+    width: 100%;
+  }
+}

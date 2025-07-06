@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sold Cars - Admin Panel</title>
+  <link rel="stylesheet" href="/css/ridex_dark_theme.css">
+  <link rel="stylesheet" href="/css/admin_theme.css" />
+  <link rel="stylesheet" href="/css/carView.css" />
+
+</head>
+<body class="admin-body">
+
+    <%- include('../partials/adminHeader') %>
+    
+    <main class="admin-main">
+      <div class="admin-container">
+        <h1 class="admin-title">Sold Cars</h1>
+    
+        <form class="filter-form" method="GET" action="/admin/sales">
+          <select name="body_style">
+            <option value="">All Body Styles</option>
+            <% body_style.forEach(row => { %>
+              <option value="<%= row.body_style %>" <%= query.body_style === row.body_style ? 'selected' : '' %>>
+                <%= row.body_style %>
+              </option>
+            <% }) %>
+          </select>
+    
+          <select name="make">
+            <option value="">All Makes</option>
+            <% makes.forEach(row => { %>
+              <option value="<%= row.make %>" <%= query.make === row.make ? 'selected' : '' %>>
+                <%= row.make %>
+              </option>
+            <% }) %>
+          </select>
+    
+          <select name="color">
+            <option value="">All Colors</option>
+            <% colors.forEach(row => { %>
+              <option value="<%= row.color %>" <%= query.color === row.color ? 'selected' : '' %>>
+                <%= row.color %>
+              </option>
+            <% }) %>
+          </select>
+    
+          <select name="transmission">
+            <option value="">All Transmissions</option>
+            <% transmissions.forEach(row => { %>
+              <option value="<%= row.transmission %>" <%= query.transmission === row.transmission ? 'selected' : '' %>>
+                <%= row.transmission %>
+              </option>
+            <% }) %>
+          </select>
+    
+          <select name="condition">
+            <option value="">All Conditions</option>
+            <% conditions.forEach(row => { %>
+              <option value="<%= row.condition %>" <%= query.condition === row.condition ? 'selected' : '' %>>
+                <%= row.condition %>
+              </option>
+            <% }) %>
+          </select>
+    
+          <input type="number" name="min_price" placeholder="Min Price" value="<%= query.min_price || '' %>">
+          <input type="number" name="max_price" placeholder="Max Price" value="<%= query.max_price || '' %>">
+          <input type="date" name="start_date" value="<%= query.start_date || '' %>">
+          <input type="date" name="end_date" value="<%= query.end_date || '' %>">
+          <input type="text" name="keyword" placeholder="Search by model or trim" value="<%= query.keyword || '' %>">
+          <button type="submit" class="btn">Filter</button>
+        </form>
+    
+        <ul class="admin-car-list">
+          <% if (cars.length > 0) { %>
+            <% cars.forEach(car => { %>
+              <li class="admin-car-card">
+                <img src="/<%= car.image || 'img/default-car.jpg' %>" alt="<%= car.make %>" class="admin-car-image" />
+                <div class="admin-car-content">
+                  <div class="admin-car-title"><%= car.make %> <%= car.model %> (<%= car.year %>)</div>
+                  <div class="admin-car-details">Color: <%= car.color %></div>
+                  <div class="admin-car-details">Transmission: <%= car.transmission %></div>
+                  <div class="admin-car-price">$<%= car.price %></div>
+                  <% if (car.sold_date) { %>
+                    <div class="sold-badge">Sold on: <%= new Date(car.sold_date).toLocaleDateString() %></div>
+                  <% } %>
+                </div>
+              </li>
+            <% }) %>
+          <% } else { %>
+            <p style="text-align: center; color: #999;">No sold cars match your filters.</p>
+          <% } %>
+        </ul>
+      </div>
+    </main>
+    
+    </body>
+    </html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/ridex_dark_theme.css" />
+
+  <style>
+  header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%; /* Full width */
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+header nav {
+  width: 100%; /* full width */
+  max-width: 1200px; /* optional for content limit */
+  margin: 0 auto; /* center content inside */
+  text-align: center;
+  height: 80px;
+  padding: 0 30px; /* space from left/right */
+}
+
+
+header nav .logo{
+    width: 150px;
+    text-align: center;
+}
+nav .menu a{
+    color: #fff;
+    margin-left: 30px;
+    display: inline-block;
+    position: relative;
+    top: -1rem;
+}
+nav .menu a::after{
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: #dd0707;
+    transition: 0.4s;
+}
+nav .menu a:hover::after{
+    width: 100%;
+}
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background-color: #1a1a1a;
+      padding: 30px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+    }
+
+    h1 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #555;
+      background-color: #222;
+      color: #fff;
+      border-radius: 4px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    button {
+      background-color: #dd0707;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: transparent;
+      border: 1px solid #dd0707;
+      color: #dd0707;
+    }
+
+    .error {
+      color: #dd0707;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <%- include('partials/navbar') %>
+
+  <div class="container">
+    <h1>Contact Us</h1>
+    <form id="contactForm">
+      <input type="text" id="name" name="name" placeholder="Your Name">
+      <input type="email" id="email" name="email" placeholder="Your Email">
+      <input type="text" id="subject" name="subject" placeholder="Subject">
+      <textarea id="message" name="message" placeholder="Your Message"></textarea>
+      <button type="submit">Send Message</button>
+      <div class="error" id="error_message"></div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const subject = document.getElementById("subject").value.trim();
+      const message = document.getElementById("message").value.trim();
+      const errorDiv = document.getElementById("error_message");
+
+      let errors = [];
+
+      if (name.length < 3) errors.push("Name must be at least 3 characters long.");
+      if (!email.includes("@") || email.length < 6) errors.push("Invalid email address.");
+      if (subject.length < 5) errors.push("Subject should be more descriptive.");
+      if (message.length < 20) errors.push("Message should be at least 20 characters.");
+
+      if (errors.length > 0) {
+        errorDiv.innerHTML = errors.join("<br>");
+        return;
+      }
+
+      fetch("/contact", {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, subject, message })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            alert("Message sent successfully!");
+            document.getElementById("contactForm").reset();
+            errorDiv.innerHTML = "";
+          } else {
+            errorDiv.innerHTML = data.error || "Failed to send message.";
+          }
+        })
+        .catch(() => errorDiv.innerHTML = "Failed to send message. Please try again later.");
+    });
+  </script>
+</body>
+</html>

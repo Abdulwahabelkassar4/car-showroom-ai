@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Car Variations</title>
+  <link rel="stylesheet" href="/css/ridex_dark_theme.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons.js"></script>
+</head>
+<body>
+  <%- include('partials/navbar') %>
+
+  <!-- Filter Section -->
+  <section class="filter-section">
+    <form class="filter-form" method="GET" action="/filter">
+      <div class="form-row">
+        <!-- Body Styles -->
+<select name="body_style">
+  <option value="">All Body Styles</option>
+  <% body_style.forEach(row => { %>
+    <option 
+      value="<%= row.body_style %>"
+      <%= query.body_style === row.body_style ? 'selected' : '' %>
+    >
+      <%= row.body_style %>
+    </option>
+  <% }) %>
+</select>
+
+<!-- Makes -->
+<select name="make">
+  <option value="">All Makes</option>
+  <% makes.forEach(row => { %>
+    <option 
+      value="<%= row.make %>"
+      <%= query.make === row.make ? 'selected' : '' %>
+    >
+      <%= row.make %>
+    </option>
+  <% }) %>
+</select>
+
+<!-- Colors -->
+<select name="color">
+  <option value="">All Colors</option>
+  <% colors.forEach(row => { %>
+    <option 
+      value="<%= row.color %>"
+      <%= query.color === row.color ? 'selected' : '' %>
+    >
+      <%= row.color %>
+    </option>
+  <% }) %>
+</select>
+
+<!-- Transmissions -->
+<select name="transmission">
+  <option value="">All Transmissions</option>
+  <% transmissions.forEach(row => { %>
+    <option 
+      value="<%= row.transmission %>"
+      <%= query.transmission === row.transmission ? 'selected' : '' %>
+    >
+      <%= row.transmission %>
+    </option>
+  <% }) %>
+</select>
+
+<!-- Conditions -->
+<select name="condition">
+  <option value="">All Conditions</option>
+  <% conditions.forEach(row => { %>
+    <option 
+      value="<%= row.condition %>"
+      <%= query.condition === row.condition ? 'selected' : '' %>
+    >
+      <%= row.condition %>
+    </option>
+  <% }) %>
+</select>
+
+  
+        <input type="number" name="min_price" placeholder="Min Price" value="<%= query.min_price || '' %>" />
+        <input type="number" name="max_price" placeholder="Max Price" value="<%= query.max_price || '' %>" />
+  
+        <button type="submit" class="btn">Filter</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Car Listings Section -->
+  <section id="car-listings" style="padding: 20px 0;">
+    <ul class="featured-car-list">
+      <% if (cars && cars.length) { %>
+        <% cars.forEach(car => { %>
+          <li>
+            <div class="featured-car-card" data-car-id="<%= car.id %>">
+              <figure class="card-banner">
+                <!-- Ensure car.image exists or provide a fallback image -->
+                <img
+                  src="<%= car.image || '/img/default-car.jpg' %>"
+                  alt="<%= car.make %> <%= car.model %>"
+                  loading="lazy"
+                  width="440"
+                  height="300"
+                  class="w-100"
+                />
+              </figure>
+              <div class="card-content">
+                <div class="card-title-wrapper">
+                  <h3 class="h3 card-title">
+                    <a href="/cars/<%= car.id %>">
+                      <%= car.make %> <%= car.model %>
+                    </a>
+                  </h3>
+                  <data class="year" value="<%= car.year %>">
+                    <%= car.year %>
+                  </data>
+                  <% if (car.trim) { %>
+                    <span class="trim-badge"><%= car.trim %></span>
+                  <% } %>
+                </div>
+                <ul class="card-list">
+                  <li class="card-list-item">
+                    <ion-icon name="car-sport-outline"></ion-icon>
+                    <span class="card-item-text"><%= car.body_style %></span>
+                  </li>
+                  <li class="card-list-item">
+                    <ion-icon name="color-palette-outline"></ion-icon>
+                    <span class="card-item-text"><%= car.color %></span>
+                  </li>
+                  <li class="card-list-item">
+                    <ion-icon name="speedometer-outline"></ion-icon>
+                    <span class="card-item-text">
+                      <%= car.odometer ? car.odometer.toLocaleString() : 'N/A' %> miles
+                    </span>
+                  </li>
+                  <li class="card-list-item">
+                    <ion-icon name="hardware-chip-outline"></ion-icon>
+                    <span class="card-item-text"><%= car.transmission %></span>
+                  </li>
+                </ul>
+                <div class="card-price-wrapper">
+                  <div class="car-price">
+                    <strong>$<%= car.price ? car.price.toLocaleString() : '0' %></strong>
+                  </div>
+                  <div class="condition-tag">Condition: <%= car.condition %></div>
+
+                  <button class="btn rent-btn" onclick="loadCarDetails('<%= car.id %>')">
+                    <ion-icon name="arrow-forward-outline"></ion-icon> View
+                  </button>
+                </div>
+              </div>
+            </div>
+          </li>
+        <% }) %>
+      <% } else { %>
+        <li>
+          <div class="error-message">
+            <ion-icon name="warning-outline"></ion-icon>
+            <p>No cars available at this time.</p>
+          </div>
+        </li>
+      <% } %>
+    </ul>
+  </section>
+
+     <!-- Modal HTML -->
+<div id="car-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+
+    <div class="modal-car-image">
+      <img id="modal-car-img" src="" alt="Car Image">
+    </div>
+
+    <div class="modal-car-details">
+      <p id="modal-car-desc"></p>
+    </div>
+  </div>
+</div>
+    
+<script>
+   function loadCarDetails(carId) {
+fetch(`/api/car-description/${carId}`)
+.then(res => res.json())
+.then(data => {
+  document.getElementById('modal-car-desc').textContent = data.description;
+  document.getElementById('modal-car-img').src = '/' + data.image;
+  document.getElementById('car-modal').style.display = 'flex';
+})
+.catch(err => {
+  console.error('Failed to load car description:', err);
+  alert('Failed to load car description');
+});
+}
+
+
+function closeModal() {
+const modal = document.getElementById('car-modal');
+if (modal) {
+modal.style.display = 'none';
+}
+}
+
+window.onclick = function(event) {
+  const modal = document.getElementById('car-modal');
+  if (event.target === modal) {
+    closeModal();
+  }
+};
+
+
+
+</script>
+</body>
+</html>

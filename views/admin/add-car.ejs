@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - Add Car</title>
+  <link rel="stylesheet" href="/css/admin_theme.css">
+  <link rel="stylesheet" href="/css/ridex_dark_theme.css">
+</head>
+<body class="admin-body">
+
+
+  <%- include('../partials/adminHeader') %>
+  
+  <div class="admin-container">
+    <h1 class="admin-title">Add New Car</h1>
+    
+    <form id="addCarForm" method="POST" action="/admin/add-car" class="admin-form">
+      <div class="form-group">
+        <label for="year">Year:</label>
+        <input type="number" name="year" id="year" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="make">Make:</label>
+        <input type="text" name="make" id="make" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="model">Model:</label>
+        <input type="text" name="model" id="model" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="trim">Trim:</label>
+        <input type="text" name="trim" id="trim" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="body_style">Body Style:</label>
+        <input type="text" name="body_style" id="body_style" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="transmission">Transmission:</label>
+        <input type="text" name="transmission" id="transmission" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="state">State:</label>
+        <input type="text" name="state" id="state" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="condition">Condition:</label>
+        <input type="number" step="0.1" name="condition" id="condition" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="odometer">Odometer:</label>
+        <input type="number" name="odometer" id="odometer" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="color">Color:</label>
+        <input type="text" name="color" id="color" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="interior">Interior:</label>
+        <input type="text" name="interior" id="interior" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="price">Price:</label>
+        <input type="number" step="0.01" name="price" id="price" required>
+      </div>
+     
+      <div class="form-group">
+        <label for="image">Image URL:</label>
+        <input type="text" name="image" id="image" required>
+      </div>
+      
+
+      
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea name="description" id="description" required></textarea>
+      </div>
+      
+      <button type="submit" class="admin-button">Add Car</button>
+    </form>
+  </div>
+  
+  
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const dataStr = sessionStorage.getItem("predictionData");
+      if (dataStr) {
+        const data = JSON.parse(dataStr);
+        document.getElementById('year').value = data.year;
+        document.getElementById('make').value = data.make;
+        document.getElementById('model').value = data.model;
+        document.getElementById('trim').value = data.trim;
+        document.getElementById('body_style').value = data.body;
+        document.getElementById('transmission').value = data.transmission;
+        document.getElementById('state').value = data.state;
+        document.getElementById('condition').value = data.condition;
+        document.getElementById('odometer').value = data.odometer;
+        document.getElementById('color').value = data.color;
+        document.getElementById('interior').value = data.interior;
+        document.getElementById('predicted_price').value = data.predicted_price;
+      }
+    });
+  </script>
+</body>
+</html> 

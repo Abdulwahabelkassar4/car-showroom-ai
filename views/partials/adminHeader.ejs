@@ -1,0 +1,37 @@
+<header class="admin-header">
+  <nav class="admin-nav">
+    <div class="admin-header-top">
+      <div class="admin-logo">
+        <img src="/img/car-logo.png" alt="Car Showroom Logo" />
+        <span>Admin Panel</span>
+      </div>
+      <!-- SHOW ONLY ON PHONES -->
+      <button class="admin-hamburger" onclick="toggleAdminMenu()">☰</button>
+    </div>
+
+    <div class="admin-menu-wrapper" id="adminMenu">
+      <div class="admin-menu">
+        <a href="/admin/dashboard" class="admin-nav-link">Dashboard</a>
+        <a href="/admin/control-panel" class="admin-nav-link">Control Panel</a>
+      </div>
+
+      <div class="admin-user">
+        <% if (user) { %>
+          <span class="admin-username"><%= user.username %></span>
+          <a href="/api/logout" class="admin-logout">Logout</a>
+        <% } else { %>
+          <a href="/login">Login</a>
+        <% } %>
+        <a href="/" id="VisitH">Visit Homepage</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+<script>
+  function toggleAdminMenu() {
+    const menu = document.getElementById("adminMenu");
+    menu.classList.toggle("active");
+  }
+</script>

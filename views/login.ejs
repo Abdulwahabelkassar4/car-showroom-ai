@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>loginPAGE</title>
+  <link rel="stylesheet" href="/css/ridex_dark_theme.css" />
+
+</head>
+<body>
+  <%- include('partials/navbar') %>
+
+<div class="login">
+  
+
+  <div class="login-form">
+    <form id="loginForm">
+      <h3>Email:</h3>
+      <input type="email" name="email" placeholder="Email" required><br>
+      <h3>Password:</h3>
+      <input type="password" name="password" placeholder="Password" required><br>
+      <input type="submit" value="Login" class="login-button" />  
+      <div id="loginError" style="color: red;"></div>
+      <br />
+      <h2 class="no-access">not registered?</h2>
+      <div id="r"><a href="/register">Create an account</a></div>
+      <br />
+    </form>
+  </div>
+</div>
+
+<script src="/js/auth.js"></script>
+</body>
+</html>

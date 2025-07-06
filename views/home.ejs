@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons.js"></script>
+
+    <title>Cars</title>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Ionicons 5.5.2 from unpkg -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script
+nomodule
+src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/ridex_dark_theme.css" />
+  </head>
+  <body>
+    <%- include('partials/navbar') %>
+
+    <div class="hero">
+      <div class="text">
+        <h4>Powerful, Fun and</h4>
+        <h1>
+          Fierce to <br />
+          <span>Drive</span>
+        </h1>
+        <p>Real Discovery, Real Power, Real Performance.</p>
+        <a href="#car-listings" class="btn">Discover more</a>
+      </div>
+    </div>
+
+    <!-- Car Listings Section -->
+    <section id="car-listings">
+      <ul class="featured-car-list">
+        <% if (cars && cars.length) { %>
+          <% cars.forEach((car) => { %>
+            <li>
+              <div class="featured-car-card" data-car-id="<%= car.id %>">
+                <figure class="card-banner">
+                  <!-- Output car.image directly if you store JPG in DB -->
+                  <img
+                    src="<%= car.image %>"
+                    alt="<%= car.make %> <%= car.model %>"
+                    loading="lazy"
+                    width="440"
+                    height="300"
+                    class="w-100"
+                  />
+                </figure>
+                <div class="card-content">
+                  <div class="card-title-wrapper">
+                    <h3 class="h3 card-title">
+                      <a href="/cars/<%= car.id %>">
+                        <%= car.make %> <%= car.model %>
+                      </a>
+                    </h3>
+                    <data class="year" value="<%= car.year %>">
+                      <%= car.year %>
+                    </data>
+                    <span class="trim-badge"><%= car.trim %></span>
+                  </div>
+                  <ul class="card-list">
+                    <li class="card-list-item">
+                      <ion-icon name="car-sport-outline"></ion-icon>
+                      <span class="card-item-text"><%= car.body_style %></span>
+                    </li>
+                    <li class="card-list-item">
+                      <ion-icon name="color-palette-outline"></ion-icon>
+                      <span class="card-item-text"><%= car.color %></span>
+                    </li>
+                    <li class="card-list-item">
+                      <ion-icon name="speedometer-outline"></ion-icon>
+                      <span class="card-item-text">
+                        <%= car.odometer ? car.odometer.toLocaleString() : 'N/A' %> miles
+                      </span>
+                    </li>
+                    <li class="card-list-item">
+                      <ion-icon name="hardware-chip-outline"></ion-icon>
+                      <span class="card-item-text"><%= car.transmission %></span>
+                    </li>
+                  </ul>
+                  <div class="card-price-wrapper">
+                    <div class="car-price">
+                      <strong>$<%= car.price ? car.price.toLocaleString() : 'N/A' %></strong>
+                    </div>
+                    <div class="condition-tag">Condition: <%= car.condition || 'N/A' %></div>
+
+                    <button class="btn rent-btn" onclick="loadCarDetails('<%= car.id %>')">
+                      <ion-icon name="arrow-forward-outline"></ion-icon> View
+                    </button>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            </li>
+          <% }) %>
+        <% } else { %>
+          <li>
+            <div class="error-message">
+              <ion-icon name="warning-outline"></ion-icon>
+              <p>No cars available at this time.</p>
+            </div>
+          </li>
+        <% } %>
+      </ul>
+    </section>
+
+    <!-- JS -->
+    <script src="/js/ridex.js" defer></script>
+
+    <!-- Car Modal -->
+   <!-- Modal HTML -->
+<div id="car-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+
+    <div class="modal-car-image">
+      <img id="modal-car-img" src="" alt="Car Image">
+    </div>
+
+    <div class="modal-car-details">
+      <p id="modal-car-desc"></p>
+    </div>
+    <div class="modal-car-actions" style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;"></div>
+  </div>
+</div>
+
+
+    <%- include('partials/footer') %>
+
+    
+<script>
+  let heroBg = document.querySelector(".hero");
+  setInterval(() => {
+    if (heroBg) {
+      heroBg.style.backgroundImage = "url('/img/bg-light.jpg')";
+      setTimeout(() => {
+        heroBg.style.backgroundImage = "url('/img/bg.jpg')";
+      }, 1000);
+    }
+  }, 2200);
+
+  function loadCarDetails(carId) {
+  fetch(`/api/car-description/${carId}`)
+    .then(res => res.json())
+    .then(data => {
+  document.getElementById('modal-car-desc').textContent = data.description;
+  document.getElementById('modal-car-img').src = '/' + data.image;
+  document.getElementById('car-modal').style.display = 'flex';
+
+  const actionsContainer = document.querySelector('.modal-car-actions');
+  actionsContainer.innerHTML = '';
+
+  if (data.sold) {
+    actionsContainer.innerHTML = `
+      <span class="sold-badge" style="background: red; color: white; font-weight: bold; padding: 8px 12px; border-radius: 5px;">
+        🚫 Sold
+      </span>
+    `;
+  } else {
+    const buyForm = document.createElement('form');
+    buyForm.action = `/buy/${carId}`;
+    buyForm.method = 'GET';
+    buyForm.innerHTML = `<button class="btn" style="background: green;">Buy Car</button>`;
+
+    const bookForm = document.createElement('form');
+    bookForm.action = `/book-test-drive/${carId}`;
+    bookForm.method = 'GET';
+    bookForm.innerHTML = `<button class="btn" style="background: gold; color: black;">Book Test Drive</button>`;
+
+    actionsContainer.appendChild(buyForm);
+    actionsContainer.appendChild(bookForm);
+  }
+})
+
+    .catch(err => {
+      console.error('Failed to load car description:', err);
+      alert('Failed to load car description');
+    });
+}
+
+
+
+function closeModal() {
+const modal = document.getElementById('car-modal');
+if (modal) {
+modal.style.display = 'none';
+}
+}
+
+window.onclick = function(event) {
+  const modal = document.getElementById('car-modal');
+  if (event.target === modal) {
+    closeModal();
+  }
+};
+
+
+
+</script>
+  </body>
+</html>

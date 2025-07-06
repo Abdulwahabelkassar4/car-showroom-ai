@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Car Showroom</title>
+    <link rel="stylesheet" href="/css/ridex_dark_theme.css">
+    <link rel="stylesheet" href="/css/admin_theme.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="admin-body">
+    <%- include('../partials/adminHeader') %>
+
+    <main class="admin-main">
+        <div class="admin-container">
+            <h1 class="admin-title">Dashboard Overview</h1>
+            
+            <!-- Hidden inputs to store stats -->
+            <input type="hidden" id="totalUsers" value="<%= stats.totalUsers %>">
+            <input type="hidden" id="totalCars" value="<%= stats.totalCars %>">
+            <input type="hidden" id="totalOrders" value="<%= stats.totalOrders %>">
+            <input type="hidden" id="totalPricePredictions" value="<%= stats.totalPricePredictions %>">
+            <input type="hidden" id="totalDemandPredictions" value="<%= stats.totalDemandPredictions %>">
+            
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <h3>Total Users</h3>
+                    <p class="kpi-value"><%= stats.totalUsers %></p>
+                </div>
+                <div class="kpi-card">
+                    <h3>Total Cars</h3>
+                    <p class="kpi-value"><%= stats.totalCars %></p>
+                </div>
+                <div class="kpi-card">
+                    <h3>Total Orders</h3>
+                    <p class="kpi-value"><%= stats.totalOrders %></p>
+                </div>
+                <div class="kpi-card">
+                    <h3>Price Predictions</h3>
+                    <p class="kpi-value"><%= stats.totalPricePredictions %></p>
+                </div>
+                <div class="kpi-card">
+                    <h3>Demand Predictions</h3>
+                    <p class="kpi-value"><%= stats.totalDemandPredictions %></p>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html> 

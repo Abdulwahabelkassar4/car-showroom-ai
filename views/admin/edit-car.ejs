@@ -1,0 +1,105 @@
+<!-- Admin | Edit Car -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Car</title>
+  <link rel="stylesheet" href="/css/ridex_dark_theme.css">
+  <link rel="stylesheet" href="/css/admin_theme.css">
+</head>
+<body>
+  <%- include('../partials/adminHeader') %>
+
+  <div class="container prediction-container">
+    <h1 class="prediction-title">
+      <i class="ri-edit-box-line"></i> Edit Car Details
+    </h1>
+
+    <form action="/admin/update-car/<%= car.id %>" method="POST" class="prediction-form">
+      <div class="form-group">
+        <label for="year">Year:</label>
+        <input type="number" name="year" id="year" value="<%= car.year %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="make">Make:</label>
+        <input type="text" name="make" id="make" value="<%= car.make %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="model">Model:</label>
+        <input type="text" name="model" id="model" value="<%= car.model %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="trim">Trim:</label>
+        <input type="text" name="trim" id="trim" value="<%= car.trim %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="body">Body:</label>
+        <input type="text" name="body_style" id="body" value="<%= car.body_style %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="transmission">Transmission:</label>
+        <input type="text" name="transmission" id="transmission" value="<%= car.transmission %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="state">State:</label>
+        <input type="text" name="state" id="state" value="<%= car.state %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="condition">Condition:</label>
+        <input type="number" step="0.1" name="condition" id="condition" value="<%= car.condition %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="odometer">Odometer:</label>
+        <input type="number" name="odometer" id="odometer" value="<%= car.odometer %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="color">Color:</label>
+        <input type="text" name="color" id="color" value="<%= car.color %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="interior">Interior:</label>
+        <input type="text" name="interior" id="interior" value="<%= car.interior %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="price">Price:</label>
+        <input type="number" name="price" id="price" value="<%= car.price %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="image">Image URL:</label>
+        <input type="text" name="image" id="image" value="<%= car.image %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea name="description" id="description" required><%= car.description %></textarea>
+      </div>
+
+      <% if (predictedDemand) { %>
+      <div class="form-group">
+        <label for="predicted_demand">Predicted Demand:</label>
+        <input type="text" name="predicted_demand" id="predicted_demand" value="<%= predictedDemand %>">
+      </div>
+      <% } %>
+
+      <div class="button-group">
+        <button type="submit" class="predict-btn">
+          <i class="ri-save-line"></i> Save Changes
+        </button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

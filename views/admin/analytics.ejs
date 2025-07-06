@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Analytics - Admin</title>
+ <link rel="stylesheet" href="/css/admin_theme.css">
+  <link rel="stylesheet" href="/css/ridex_dark_theme.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="admin-body">
+  <%- include('../partials/adminHeader') %>
+
+  <main class="analytics-panel">
+    <div class="analytics-header">
+      <h1 class="analytics-title">Sales Analytics</h1>
+      <form method="GET" action="/admin/analytics" class="analytics-filter">
+        <label>From:
+          <input type="date" name="start_date" value="<%= query.start_date || '' %>">
+        </label>
+        <label>To:
+          <input type="date" name="end_date" value="<%= query.end_date || '' %>">
+        </label>
+        <button type="submit" class="btn">Apply</button>
+      </form>
+    </div>
+
+    <section class="analytics-section">
+      <h2 class="analytics-section-title">Top 5 Sold Models</h2>
+      <ul class="analytics-list">
+        <% topModels.forEach(row => { %>
+          <li><%= row.make %> <%= row.model %> — <%= row.total_sold %> sold</li>
+        <% }) %>
+      </ul>
+    </section>
+
+    <section class="analytics-section">
+      <h2 class="analytics-section-title">Average Price per Make</h2>
+      <ul class="analytics-list">
+        <% avgPrice.forEach(row => { %>
+          <li><%= row.make %>: $<%= row.avg_price %></li>
+        <% }) %>
+      </ul>
+    </section>
+
+    <section class="analytics-section">
+      <h2 class="analytics-section-title">Monthly Sales Chart</h2>
+      <canvas id="salesChart" width="600" height="300"></canvas>
+    </section>
+  </main>
+
+  <script>
+    const salesData = <%- JSON.stringify(monthlySales) %>;
+    const ctx = document.getElementById('salesChart').getContext('2d');
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: salesData.map(row => row.month),
+        datasets: [{
+          label: 'Cars Sold',
+          data: salesData.map(row => row.sales_count),
+          borderColor: 'gold',
+          backgroundColor: 'rgba(255, 215, 0, 0.2)',
+          tension: 0.3,
+          fill: true
+        }]
+      },
+      options: {
+        scales: {
+          y: { beginAtZero: true },
+          x: { ticks: { color: 'white' }, grid: { color: '#444' } },
+          y: { ticks: { color: 'white' }, grid: { color: '#444' } }
+        },
+        plugins: {
+          legend: { labels: { color: 'white' } },
+        },
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+/* assistant.css - Styles for AI Assistant Chat Widget */
+
+/* Floating Chat Button */
+#ai-chat-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: gold;
+    color: black;
+    padding: 14px;
+    font-size: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    transition: background-color 0.3s;
+  }
+  
+  #ai-chat-btn:hover {
+    background-color: #c9a602; /* darker gold on hover */
+  }
+  
+#ai-chat-panel {
+  position: fixed;
+  bottom: 100px;
+  right: 30px;
+  width: 320px;
+  max-height: 500px;
+  background-color: #111;
+  border: 2px solid gold;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
+  display: none;
+  z-index: 9999;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+#chat-messages {
+  padding: 12px;
+  overflow-y: auto;
+  max-height: 400px;
+  font-size: 14px;
+}
+
+.user-msg {
+  background-color: #222;
+  color: #fff;
+  padding: 8px 12px;
+  margin: 6px 0;
+  border-radius: 10px 10px 0 10px;
+  text-align: right;
+}
+
+.ai-msg {
+  background-color: #1a1a1a;
+  color: gold;
+  padding: 8px 12px;
+  margin: 6px 0;
+  border-radius: 10px 10px 10px 0;
+  text-align: left;
+}
+
+#error-msg {
+  color: red;
+  font-size: 12px;
+  padding: 6px;
+}
+
+#chat-input {
+  width: calc(100% - 60px);
+  padding: 8px;
+  border: none;
+  border-top: 1px solid #333;
+  background-color: #1a1a1a;
+  color: white;
+  font-size: 14px;
+  border-bottom-left-radius: 10px;
+}
+
+#chat-send-btn {
+  width: 50px;
+  background-color: gold;
+  border: none;
+  color: black;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  border-bottom-right-radius: 10px;
+}
+
+#chat-send-btn:hover {
+  background-color: #ffcc00;
+}
+
+  /* Input and Send Button Container */
+  #ai-chat-panel div:last-child {
+    display: flex;
+    border-top: 1px solid gold;
+  }

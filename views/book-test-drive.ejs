@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Book Test Drive - <%= car.make %> <%= car.model %></title>
+  <link rel="stylesheet" href="/css/ridex_dark_theme.css">
+  <style>
+    .booking-container {
+      display: flex;
+      max-width: 1000px;
+      margin: 50px auto;
+      gap: 40px;
+      color: white;
+      margin-top: 70px;
+    }
+
+    .car-preview img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .booking-form {
+      flex: 1;
+      background-color: #111;
+      padding: 25px;
+      border-radius: 10px;
+      border: 1px solid red;
+    }
+
+    .booking-form h2 {
+      color: gold;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      color: #ccc;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      background: black;
+      color: white;
+      border: 1px solid red;
+      border-radius: 5px;
+    }
+
+    button {
+      background: gold;
+      color: black;
+      padding: 12px 20px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    button:hover {
+      background: #e0b030;
+    }
+  </style>
+</head>
+<body>
+  <%- include('partials/navbar') %>
+
+  <div class="booking-container">
+    <div class="car-preview">
+      <img src="/<%= car.image %>" alt="<%= car.make %> <%= car.model %>">
+      <h3><%= car.make %> <%= car.model %> (<%= car.year %>)</h3>
+    </div>
+
+    <form class="booking-form" method="POST" action="/book-test-drive/<%= car.id %>">
+      <h2>Book a Test Drive</h2>
+
+      <div class="form-group">
+        <label for="booking_date">Preferred Date</label>
+        <input type="date" name="booking_date" min="<%= new Date().toISOString().split('T')[0] %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="booking_time">Preferred Time</label>
+        <select name="booking_time" required>
+          <option value="">Select a time slot</option>
+          <option value="09:00:00">09:00 AM</option>
+          <option value="10:00:00">10:00 AM</option>
+          <option value="11:00:00">11:00 AM</option>
+          <option value="13:00:00">01:00 PM</option>
+          <option value="14:00:00">02:00 PM</option>
+          <option value="15:00:00">03:00 PM</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Notes (Optional)</label>
+        <textarea name="message" rows="3"></textarea>
+      </div>
+
+      <button type="submit">Confirm Test Drive</button>
+    </form>
+  </div>
+</body>
+</html>
